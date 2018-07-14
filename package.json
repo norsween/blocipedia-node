@@ -1,0 +1,15 @@
+{
+  "name": "blocipedia-node",
+  "version": "1.0.0",
+  "description": "Application that allows users to create, collaborate, and share wikis.",
+  "main": "src/server.js",
+  "scripts": {
+    "test": "export NODE_ENV=test && jasmine"
+  },
+  "repository": {
+    "type": "git",
+    "url": "blocipedia-node"
+  },
+  "author": "",
+  "license": "ISC"
+}
