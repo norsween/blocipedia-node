@@ -19,10 +19,10 @@ describe("routes : users", () => {
 
   });
 
-  describe("GET /users/sign_up", () => {
+  describe("GET /users/signup", () => {
 
     it("should render a view with a sign up form", (done) => {
-      request.get(`${base}sign_up`, (err, res, body) => {
+      request.get(`${base}signup`, (err, res, body) => {
         expect(err).toBeNull();
         expect(body).toContain("Sign up");
         done();
@@ -30,13 +30,13 @@ describe("routes : users", () => {
     });
   });
 
-  describe("POST /users/sign_up", () => {
+  describe("POST /users/signup", () => {
 
     // Confirm that a form with valid values creates a user. 
     it("should create a new user with valid values and redirect", (done) => {
 
       const options = {
-        url: `${base}sign-up`,
+        url: `${base}signup`,
         form: {
 	  username: "user_name",
           email: "user@example.com",
@@ -67,7 +67,7 @@ describe("routes : users", () => {
     it("should not create a new user with invalid attributes and redirect", (done) => {
       request.post(
         {
-          url: `${base}sign-up`,
+          url: `${base}signup`,
           form: {
 	    username: "wrong_user",
             email: "wrong_user@example.com"
@@ -86,6 +86,17 @@ describe("routes : users", () => {
           });
         }
       );
+    });
+
+    describe("GET /users/sign_in", () => {
+
+      it("should render a view with a sign in form", (done) => {
+        request.get(`${base}sign_in`, (err, res, body) => {
+          expect(err).toBeNull();
+          expect(body).toContain("Sign in");
+          done();
+        });
+      });
     });
   });
 });
