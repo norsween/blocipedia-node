@@ -16,13 +16,12 @@
      } else {
        return next();
      }
-   }
+   },
 
    validateSigninUsers(req, res, next) {
      if(req.method === "POST") {
-       req.checkBody("username", "must be valid").isUsername();
+       req.checkBody("username", "must be at least 4 characters in length").isLength({min: 4});
        req.checkBody("password", "must match password provided").matches(req.body.password);
-     }
 
      const errors = req.validationErrors();
 
