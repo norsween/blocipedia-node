@@ -1,3 +1,4 @@
+require("dotenv").config();
 const User = require("./models").User;
 const bcrypt = require("bcryptjs");
 const sgMail = require('@sendgrid/mail');
@@ -24,11 +25,13 @@ module.exports = {
 	text: 'Welcome to Blocipedia!',
 	html: '<strong>Please login to your account to confirm membership!</strong>',
       };
+	console.log(msg);
       sgMail.send(msg);
       callback(null, user);
     })
     .catch((err) => {
       callback(err);
+	console.log(err);
     })
   }
 }
