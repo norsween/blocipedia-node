@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <% include ../static/partials/head.ejs %>
+    </head>
+    <body>
+        <% include ../static/partials/navbar.ejs %>
+
+        <main class="container">
+            <% include ../static/partials/messages.ejs %>
+
+            <% if(currentUser && currentUser.role == "standard") { %>
+	    	<header class="jumbotron my-3">
+            	  <h1 class="display-5">Upgrade to premium membership.</h1>
+	    	  <p class="lead">No contract. Cancel anytime. $10 a month.</p>
+		  <ul>
+			<li>Create private wikis.</li>
+			<li>Increase engagement.</li>
+			<li>Collaborate with other premium members.</li>
+		  </ul>
+	    	</header> 
+
+       	        <form action="/users/<%=currentUser.id%>/upgrade" method="POST">
+                	<script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+    			    data-key="pk_test_kFYGlhRrKNfnjzcDKwolKGWW"
+    			    data-amount="1000"
+    			    data-name="Demo Site"
+    			    data-description="Blocipedia Premium Membership"
+    			    data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+    			    data-locale="auto">
+                	</script>
+            	</form>
+            <% } else { %>
+
+              <% if(currentUser.role === "premium"); { %> 
+            	<h1>Are you sure you want to downgrade from The Archive's premium membership?</h1>
+            
+            	<form action="/users/<%=currentUser.id%>/downgrade" method="POST">
+                	<button type="submit" class="btn btn-danger">Downgrade your membership</button>
+            	</form>
+       	      <% } %>
+       	    <% } %>
+        </main>
+        <% include ../static/partials/baseScripts.ejs %>
+    </body>
+</html> 
