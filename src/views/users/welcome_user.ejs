@@ -1,23 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <% include ./partials/head.ejs %>
+    <% include ../static/partials/head.ejs %>
   </head>
   <body>
 
       <!-- Navigation -->
-      <% include ./partials/navbar.ejs %>
+      <% include ../static/partials/navbar.ejs %>
 
       <!-- Page Content -->
       <main class="container">
         <header class="jumbotron my-4">
           <h1 class="display-3">Welcome to Blocipedia</h1>
           <p class="lead">Start sharing the wikis that are important to you!.</p>
+
+          <% if(!currentUser) { %>
+             <a href="/users/signup" class="btn btn-primary btn-lg">Sign up</a>
+             <a href="/users/sign_in" class="btn btn-primary btn-lg">Sign in</a>
+          <% } %>
+         
+          <% if(currentUser) { %>
+             <a href="/wikis/new" class="btn btn-primary btn-md">Create Wikis</a>
+          <% } %>
         </header>
       </main>
       <!-- /.container -->
 
-      <% include ./partials/baseScripts.ejs %>
+      <% include ../static/partials/baseScripts.ejs %>
     </body>
 </html>
 

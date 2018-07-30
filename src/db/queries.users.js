@@ -25,7 +25,6 @@ module.exports = {
 	text: 'Welcome to Blocipedia!',
 	html: '<strong>Please login to your account to confirm membership!</strong>',
       };
-	console.log(msg);
       sgMail.send(msg);
       callback(null, user);
     })

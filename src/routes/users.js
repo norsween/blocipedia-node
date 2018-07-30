@@ -12,6 +12,8 @@ router.post("/users/sign_in", validation.validateSigninUsers, userController.sig
 
 router.get("/users/sign_out", userController.signOut);
 
+router.get("/users/welcome_user", userController.welcomeUser);
+
 router.get("/users/upgrade", userController.upgradeForm);
 router.post("/users/:id/upgrade", userController.upgrade);
 

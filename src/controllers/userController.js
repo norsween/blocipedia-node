@@ -1,11 +1,12 @@
  const userQueries = require("../db/queries.users.js");
+ const wikiQueries = require("../db/queries.wikis.js");
  const passport = require("passport");
  const publishableKey = process.env.PUBLISHABLE_KEY;
 
  module.exports = {
  
    index(req, res, next) {
-     res.redirect("/");
+     res.render("/");
    },
 
    signUp(req, res, next) {
@@ -32,7 +33,6 @@
            res.redirect("users/welcome_user");
          })
        }
-     res.render("users/welcome_user");
      });
    },
 
@@ -47,10 +47,9 @@
          res.redirect("/users/sign_in");
        } else {
          req.flash("notice", "You've successfully signed in!");
-         res.redirect("users/welcome_user");
+         res.redirect("/users/welcome_user");
        }
      })
-     res.render("users/welcome_user");
    },
 
    signOut(req, res, next){
@@ -63,6 +62,10 @@
      res.render("users/upgrade_downgrade", {publishableKey});
    },
 
+   welcomeUser(req, res, next){
+     res.render("users/welcome_user");
+   },
+
    upgrade(req, res, next){
      userQueries.upgrade(req.user.dataValues.id);
      res.render("users/payment_response");
@@ -70,6 +73,7 @@
 
    downgrade(req, res, next){
      userQueries.downgrade(req.user.dataValues.id);
+     wikiQueries.downgradePrivateWikis(req.user.dataValues.id);
      req.flash("notice", "You are no longer a premium user!");
      res.redirect("/");
    }

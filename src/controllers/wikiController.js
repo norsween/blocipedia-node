@@ -2,12 +2,22 @@ const wikiQueries = require("../db/queries.wikis.js");
 const Authorizer = require("../policies/application");
 
 module.exports = {
-    index(req, res, next){
+    publicIndex(req, res, next){
       wikiQueries.getAllWikis((err, wikis) => {
           if(err){
               res.redirect(500, "static/index");
           } else {
-              res.redirect("wikis/index", {wikis});
+              res.render("wikis/publicIndex", {wikis});
+          }
+      });
+    },
+
+    privateIndex(req, res, next){
+      wikiQueries.getAllWikis((err, wikis) => {
+          if(err){
+              res.redirect(500, "static/index");
+          } else {
+              res.render("wikis/privateIndex", {wikis});
           }
       });
     },
@@ -56,7 +66,13 @@ module.exports = {
             if(err || wiki == null){
                 res.redirect(404, "/");
             } else {
-                res.render("wikis/edit", {wiki});
+		const authorized = new Authorizer(req.user).edit();
+		if(authorized){
+                  res.render("wikis/edit", {wiki});
+		} else {
+		  req.flash("notice", "You are not authorized to do that.");
+                  res.redirect(`/wikis/${req.params.id}`);
+		}
             }
         });
     },
