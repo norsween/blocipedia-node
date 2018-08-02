@@ -30,7 +30,7 @@
 
          passport.authenticate("local")(req, res, () => {
            req.flash("notice", "You've successfully signed up!");
-           res.redirect("users/welcome_user");
+           res.render("users/welcome_user");
          })
        }
      });
@@ -76,5 +76,21 @@
      wikiQueries.downgradePrivateWikis(req.user.dataValues.id);
      req.flash("notice", "You are no longer a premium user!");
      res.redirect("/");
+   },
+
+   showCollaborations(req, res, next){
+     userQueries.getUser(req.user.id, (err, result) => {
+       user = result["user"];
+       collaborations = result["collaborations"];
+       if(err || user == null){
+         res.redirect(404, "/");
+       } else {
+         res.render("users/collaborations", {user, collaborations});
+       }
+     });
    }
-}
+ }
+
+
+
+

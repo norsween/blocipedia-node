@@ -33,11 +33,13 @@
             <% } else { %>
 
               <% if(currentUser.role === "premium"); { %> 
-            	<h1>Are you sure you want to downgrade from The Archive's premium membership?</h1>
+	    	<header class="jumbotron my-3">
+            	  <h1>Are you sure you want to downgrade from Blocipedia's premium membership?</h1>
             
-            	<form action="/users/<%=currentUser.id%>/downgrade" method="POST">
+            	  <form action="/users/<%=currentUser.id%>/downgrade" method="POST">
                 	<button type="submit" class="btn btn-danger">Downgrade your membership</button>
-            	</form>
+            	  </form>
+		</header>
        	      <% } %>
        	    <% } %>
         </main>

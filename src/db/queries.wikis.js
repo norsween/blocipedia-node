@@ -1,11 +1,30 @@
 const Wiki = require("./models").Wiki;
 const User = require("./models").User;
+const Collaborator = require("./models").Collaborator;
+const Authorizer = require("../policies/application");
 
 module.exports = {
 
-  getAllWikis(callback){
-    return Wiki.all()
+  getAllPublicWikis(callback){
+    return Wiki.findAll({
+	where: {
+	   private: 'f'
+	}
+    })
+    .then((wikis) => {
+      callback(null, wikis);
+    })
+    .catch((err) => {
+      callback(err);
+    })
+  },
 
+  getAllPrivateWikis(callback){
+    return Wiki.findAll({
+	where: {
+	   private: 't'
+	}
+    })
     .then((wikis) => {
       callback(null, wikis);
     })
@@ -15,12 +34,22 @@ module.exports = {
   },
 
   getWiki(id, callback){
+      let result = {};
       return Wiki.findById(id)
       .then((wiki) => {
-          callback(null, wiki);
-      })
-      .catch((err) => {
-          callback(err);
+	  if(!wiki){
+              callback(404);
+          } else {
+              result["wiki"] = wiki;
+              //Collaborator.scope({method: ["collaboratorsFor", id]}).all()
+              //.then((collaborators) => {
+              //    result["collaborators"] = collaborators;
+              //    callback(null, result);
+              //})
+              //.catch((err) => {
+              //    callback(err);
+              })
+          }
       })
   },
 

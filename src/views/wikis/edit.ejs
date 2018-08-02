@@ -25,6 +25,10 @@
           <small class="text-muted" id="titleHelp">body must be 10 or more characters in length.</small>
         </div>
         <button type="submit" class="btn btn-primary">Update</button>
+
+	<% if(currentUser && (currentUser.id == wiki.userId || currentUser && currentUser.isAdmin())) { %>
+          <a href='/wikis/<%= wiki.id %>/collaborators' class="btn btn-info">Edit Collaborators</a>
+        <% } %>
       </form>
     </main>
 
